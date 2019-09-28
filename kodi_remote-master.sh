@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 # VARIABLES
-  KODI_HOST='mythtv'
+  KODI_HOST=1.1.1.1
   KODI_PORT='8080'
   KODI_USER='kodi'
   KODI_PASS=''
@@ -53,6 +53,12 @@ echo value = $1
 	6)
 	echo volume down
 	   kodi_req '{ "jsonrpc": "2.0", "method": "Application.SetVolume", "params": { "volume": "decrement" }, "id": 1 }'
+	;;
+	7)
+	   TEXT=$(yad --title='Send Text to Kodi' \
+	          --center --icon=kodi --borders=20 --width=300 \
+		  --entry --entry-text="Type Here" )
+           [[ $TEXT ]] && kodi_req "{\"jsonrpc\":\"2.0\",\"method\":\"Input.SendText\",\"params\":{\"text\":\""${TEXT}"\",\"done\":false},\"id\": 0}"
 	;;
 	8)
 	echo play.pause
